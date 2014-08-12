@@ -357,7 +357,7 @@
           <artifactId>libmpfr</artifactId>
           <version>3.1.2</version>
           <type>a</type>
-          <classifier>macosx</classifier>
+          <classifier>osx</classifier>
           <scope>provided</scope>
         </dependency>
         <dependency>
@@ -372,7 +372,7 @@
           <artifactId>libgmp</artifactId>
           <version>6.0.0a</version>
           <type>a</type>
-          <classifier>macosx</classifier>
+          <classifier>osx</classifier>
           <scope>provided</scope>
         </dependency>
         <dependency>
@@ -381,7 +381,7 @@
           <version>6.0.0a</version>
           <type>h</type>
           <scope>provided</scope>
-          <classifier>macosx</classifier>
+          <classifier>osx</classifier>
         </dependency>
       </dependencies>
       <build>
