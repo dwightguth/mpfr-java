@@ -155,7 +155,7 @@
         <dependency>
           <groupId>org.mpfr</groupId>
           <artifactId>libmpfr</artifactId>
-          <version>3.1.2-SNAPSHOT</version>
+          <version>3.1.2</version>
           <type>lib</type>
           <classifier>windows${native.arch.classifier}</classifier>
           <scope>provided</scope>
@@ -163,14 +163,14 @@
         <dependency>
           <groupId>org.mpfr</groupId>
           <artifactId>mpfr</artifactId>
-          <version>3.1.2-SNAPSHOT</version>
+          <version>3.1.2</version>
           <type>h</type>
           <scope>provided</scope>
         </dependency>
         <dependency>
           <groupId>org.gmplib</groupId>
           <artifactId>gmp</artifactId>
-          <version>6.0.0a-SNAPSHOT</version>
+          <version>6.0.0a</version>
           <type>h</type>
           <classifier>windows${native.arch.classifier}</classifier>
           <scope>provided</scope>
@@ -178,16 +178,6 @@
       </dependencies>
       <build>
         <plugins>
-          <plugin>
-            <groupId>org.fusesource.hawtjni</groupId>
-            <artifactId>maven-hawtjni-plugin</artifactId>
-            <configuration>
-              <configureArgs>
-                <arg>LIBS=${project.build.directory}/dependency/libmpfr.a ${project.build.directory}/dependency/libgmp.a</arg>
-                <arg>CPPFLAGS=-I${project.build.directory}/dependency</arg>
-              </configureArgs>
-            </configuration>
-          </plugin>
           <plugin>
             <!-- BuildMojo doesn't let you specify additional linker dependencies on windows,
                  so we had to use a custom build script -->
@@ -236,13 +226,16 @@
     <profile>
       <id>linux</id>
       <activation>
-        <os><family>Unix</family></os>
+        <os>
+          <family>Unix</family>
+          <name>!mac os x</name>
+        </os>
       </activation>
       <dependencies>
         <dependency>
           <groupId>org.mpfr</groupId>
           <artifactId>libmpfr</artifactId>
-          <version>3.1.2-SNAPSHOT</version>
+          <version>3.1.2</version>
           <type>a</type>
           <classifier>linux${native.arch.classifier}</classifier>
           <scope>provided</scope>
@@ -250,14 +243,14 @@
         <dependency>
           <groupId>org.mpfr</groupId>
           <artifactId>mpfr</artifactId>
-          <version>3.1.2-SNAPSHOT</version>
+          <version>3.1.2</version>
           <type>h</type>
           <scope>provided</scope>
         </dependency>
         <dependency>
           <groupId>org.gmplib</groupId>
           <artifactId>libgmp</artifactId>
-          <version>6.0.0a-SNAPSHOT</version>
+          <version>6.0.0a</version>
           <type>a</type>
           <classifier>linux${native.arch.classifier}</classifier>
           <scope>provided</scope>
@@ -265,7 +258,7 @@
         <dependency>
           <groupId>org.gmplib</groupId>
           <artifactId>gmp</artifactId>
-          <version>6.0.0a-SNAPSHOT</version>
+          <version>6.0.0a</version>
           <type>h</type>
           <scope>provided</scope>
           <classifier>linux</classifier>
@@ -318,28 +311,39 @@
       </properties>
     </profile>
 
-   <profile>
-     <id>amd64</id>
-     <activation>
-       <os><arch>amd64</arch></os>
-     </activation>
-     <properties>
-       <native.os.build>x86_64</native.os.build>
-       <native.arch.classifier>64</native.arch.classifier>
-       <native.windows.arch>x64</native.windows.arch>
-     </properties>
-   </profile>
     <profile>
-     <id>x64</id>
-     <activation>
-       <os><arch>x64</arch></os>
-     </activation>
-     <properties>
-       <native.os.build>x86_64</native.os.build>
-       <native.arch.classifier>64</native.arch.classifier>
-       <native.windows.arch>x64</native.windows.arch>
-     </properties>
-   </profile>
+      <id>amd64</id>
+      <activation>
+        <os><arch>amd64</arch></os>
+      </activation>
+      <properties>
+        <native.os.build>x86_64</native.os.build>
+        <native.arch.classifier>64</native.arch.classifier>
+        <native.windows.arch>x64</native.windows.arch>
+      </properties>
+    </profile>
+    <profile>
+      <id>x86_64</id>
+      <activation>
+        <os><arch>x86_64</arch></os>
+      </activation>
+      <properties>
+        <native.os.build>x86_64</native.os.build>
+        <native.arch.classifier>64</native.arch.classifier>
+        <native.windows.arch>x64</native.windows.arch>
+      </properties>
+    </profile>
+    <profile>
+      <id>x64</id>
+      <activation>
+        <os><arch>x64</arch></os>
+      </activation>
+      <properties>
+        <native.os.build>x86_64</native.os.build>
+        <native.arch.classifier>64</native.arch.classifier>
+        <native.windows.arch>x64</native.windows.arch>
+      </properties>
+    </profile>
  
     <profile>
       <!-- Profile which enables Universal binaries on OS X -->
@@ -347,6 +351,39 @@
       <activation>
         <os><family>mac</family></os>
       </activation>
+      <dependencies>
+        <dependency>
+          <groupId>org.mpfr</groupId>
+          <artifactId>libmpfr</artifactId>
+          <version>3.1.2</version>
+          <type>a</type>
+          <classifier>macosx</classifier>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.mpfr</groupId>
+          <artifactId>mpfr</artifactId>
+          <version>3.1.2</version>
+          <type>h</type>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.gmplib</groupId>
+          <artifactId>libgmp</artifactId>
+          <version>6.0.0a</version>
+          <type>a</type>
+          <classifier>macosx</classifier>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.gmplib</groupId>
+          <artifactId>gmp</artifactId>
+          <version>6.0.0a</version>
+          <type>h</type>
+          <scope>provided</scope>
+          <classifier>macosx</classifier>
+        </dependency>
+      </dependencies>
       <build>
         <plugins>
           <plugin>
@@ -359,15 +396,22 @@
                 <osgiPlatform>*</osgiPlatform>
               </osgiPlatforms>
               <configureArgs>
-                <arg>LIBS=${mpfr.libs}</arg>
-                <arg>CPPFLAGS=${mpfr.cppflags} -mmacosx-version-min=10.6</arg>
-                <arg>--build=${mpfr.build}</arg>
+                <arg>LIBS=${project.build.directory}/dependency/libmpfr.a ${project.build.directory}/dependency/libgmp.a</arg>
+                <arg>CPPFLAGS=-I${project.build.directory}/dependency -mmacosx-version-min=10.6</arg>
                 <arg>--with-universal</arg>
                 <arg>CFLAGS=-mmacosx-version-min=10.6</arg>
                 <arg>LDFLAGS=-mmacosx-version-min=10.6</arg>
               </configureArgs>
               <platform>osx</platform>
             </configuration>
+            <executions>
+              <execution>
+                <id>build</id>
+                <goals>
+                  <goal>build</goal>
+                </goals>
+              </execution>
+            </executions>
           </plugin>
         </plugins>
       </build>
